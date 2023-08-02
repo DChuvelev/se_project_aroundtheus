@@ -1,0 +1,42 @@
+.card {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 213px 69px;
+    grid-template-rows: 282px 79px;
+    grid-template-areas:
+        "card-img   card-img"
+        "card-capt  card-ico";
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #FFF;
+}
+
+.card__image {
+    grid-area: card-img;
+    width: 100%;
+    height: 100%;
+}
+
+.card__caption {
+    grid-area: card-capt;
+    margin: 0 0 0 20px;
+    padding: 0;
+    color: #000;
+    font-weight: 900;
+    align-self: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card__icon {
+    grid-area: card-ico;
+    background-color: transparent;
+    width: 21px;
+    height: 18px;
+    margin: auto 20px auto auto;
+}
+
+.card__icon:hover {
+    opacity: 0.6;
+}
