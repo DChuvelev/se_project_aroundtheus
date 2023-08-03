@@ -2,15 +2,17 @@
     max-width: 100%;
     min-height: 74px;
     margin: auto;
-    border-bottom: #545454 solid 1px;
+    border-bottom: #545454B2 solid 1px;
 }
 
 .header__image {
+    margin-left: 10px;
     width: 173px;
 }
 
-@media screen and (max-width: 614px) {
+@media screen and (max-width: 648px) {
     .header {
+        /* width: 100vw; */
         min-height: 56px;
     }
     .header__image {

@@ -16,8 +16,10 @@
     box-sizing: border-box;
 }
 
-@media screen and (max-width: 614px) {
+@media screen and (max-width: 648px) {
     .page__content {
         max-width: 282px;
+        margin: 28px auto 36px;
+        padding: 0;
     }
 }

@@ -5,7 +5,7 @@
     grid-template-rows: 282px 79px;
     grid-template-areas:
         "card-img   card-img"
-        "card-capt  card-ico";
+        "card-capt  card-heart";
     border-radius: 10px;
     overflow: hidden;
     background-color: #FFF;
@@ -22,6 +22,7 @@
     margin: 0 0 0 20px;
     padding: 0;
     color: #000;
+    font-size: 24px;
     font-weight: 900;
     align-self: center;
     white-space: nowrap;
@@ -29,14 +30,19 @@
     text-overflow: ellipsis;
 }
 
-.card__icon {
-    grid-area: card-ico;
+.card__button-heart {
+    grid-area: card-heart;
+    background-image: url(../images/heart-icon.svg);
     background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
     width: 21px;
     height: 18px;
     margin: auto 20px auto auto;
 }
 
-.card__icon:hover {
-    opacity: 0.6;
+.card__button-heart:hover {
+    opacity: 0.5;
 }

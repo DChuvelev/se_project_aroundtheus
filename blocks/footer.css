@@ -1,6 +1,18 @@
 .footer {
     max-width: 100%;
     margin: auto;
+}
+
+.footer__text {
     color: #545454;
     font-size: 18px;
+    line-height: 1.2;
+    margin: 0;
+}
+
+@media screen and (max-width: 648px) {
+    .footer__text{
+        padding-left: 17px;
+        font-size: 14px;
+    }
 }
