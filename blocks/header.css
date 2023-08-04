@@ -6,16 +6,15 @@
 }
 
 .header__image {
-    margin-left: 10px;
     width: 173px;
 }
 
 @media screen and (max-width: 648px) {
     .header {
-        /* width: 100vw; */
         min-height: 56px;
     }
     .header__image {
         width: 126px;
+        margin-left: 27px;
     } 
 }
