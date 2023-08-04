@@ -18,7 +18,7 @@
     width: auto;
     row-gap: 7px;
     display: grid;
-    grid-template-columns: 415px;
+    grid-template-columns: auto;
     grid-template-rows: 48px 22px;
     grid-template-areas: 
         "title-edit "
@@ -36,7 +36,7 @@
     font-size: 42px;
     font-weight: 500;
     line-height: 114%;
-    max-width: 380px;
+    max-width: 373px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -54,6 +54,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 415px;
 }
 
 .profile__edit-button {
@@ -62,7 +63,8 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-color: transparent;
-    margin-left: auto;
+    margin-left: 18px;
+    flex-shrink: 0;
     width: 24px;
     height: 24px;
     border: none;
@@ -116,6 +118,7 @@
     .profile__image {
         margin: 0 0 27px 0;
     }
+
     .profile__info {
         justify-items: center;
         grid-template-columns: 282px;
