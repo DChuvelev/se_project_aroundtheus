@@ -40,6 +40,7 @@ const profileDescription = document.querySelector(".profile__description");
 const modalTitleInput = document.querySelector(".modal__input_profile-name");
 const modalDescriptionInput = document.querySelector(".modal__input_profile-description");
 let cardTemplate = document.querySelector("#card").content;
+const zero = 0;
 
 
 function modalOpen() {
@@ -57,7 +58,6 @@ function modalSubmit(evt) {
     modalClose();
 }
 function getCardElement(cardData) {
-    console.log(cardData);
     let resultCard = cardTemplate.querySelector(".card").cloneNode(true);
     resultCard.querySelector(".card__caption").textContent = cardData.name;
     resultCard.querySelector(".card__image").src = cardData.link;
@@ -69,6 +69,6 @@ editBtn.addEventListener("click", modalOpen);
 modalCloseBtn.addEventListener("click", modalClose);
 modalSubmitBtn.addEventListener("click", modalSubmit);
 
-for (i = 0; i < initialCards.length; i++) {
+for (i = zero; i < initialCards.length; i++) {
     document.querySelector(".elements__cards").append(getCardElement(initialCards[i]));
 }
