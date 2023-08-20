@@ -39,36 +39,39 @@ const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const modalTitleInput = document.querySelector(".modal__input_profile-name");
 const modalDescriptionInput = document.querySelector(".modal__input_profile-description");
-let cardTemplate = document.querySelector("#card").content;
+const cardTemplate = document.querySelector("#card").content;
+const modalForm = document.querySelector(".modal__form");
+const cards = document.querySelector(".elements__cards");
 const zero = 0;
 
 
-function modalOpen() {
+function openModalBox() {
     modalBox.classList.add("modal_opened");    
     modalTitleInput.value = profileTitle.textContent;
     modalDescriptionInput.value = profileDescription.textContent;
 }
-function modalClose() {
+function closeModalBox() {
     modalBox.classList.remove("modal_opened");
 }
-function modalSubmit(evt) {
+function submitFormProfile(evt) {
     evt.preventDefault();
     profileTitle.textContent = modalTitleInput.value;
     profileDescription.textContent = modalDescriptionInput.value;
-    modalClose();
+    closeModalBox();
 }
 function getCardElement(cardData) {
-    let resultCard = cardTemplate.querySelector(".card").cloneNode(true);
+    const resultCard = cardTemplate.querySelector(".card").cloneNode(true);
     resultCard.querySelector(".card__caption").textContent = cardData.name;
-    resultCard.querySelector(".card__image").src = cardData.link;
-    resultCard.querySelector(".card__image").alt = cardData.alt;
+    const resultCardImage = resultCard.querySelector(".card__image");
+    resultCardImage.src = cardData.link;
+    resultCardImage.alt = cardData.alt;
     return resultCard;
 }
 
-editBtn.addEventListener("click", modalOpen);
-modalCloseBtn.addEventListener("click", modalClose);
-modalSubmitBtn.addEventListener("click", modalSubmit);
+editBtn.addEventListener("click", openModalBox);
+modalCloseBtn.addEventListener("click", closeModalBox);
+modalForm.addEventListener("submit", submitFormProfile);
 
 for (i = zero; i < initialCards.length; i++) {
-    document.querySelector(".elements__cards").append(getCardElement(initialCards[i]));
+    cards.append(getCardElement(initialCards[i]));
 }
