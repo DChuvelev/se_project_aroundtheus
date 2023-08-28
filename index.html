@@ -25,7 +25,7 @@
                     </div>
                     <p class="profile__description">Explorer</p>
                 </div>
-                <button aria-label="add" class="profile__plus-button" type="button"></button>
+                <button aria-label="add" class="profile__add-card-button" type="button"></button>
             </section>
             <section class="elements">
                 <ul class="elements__cards">
@@ -38,7 +38,8 @@
             </p>
         </footer>
         <div class="modal">
-            <div class="modal__container">
+
+            <div class="modal__container modal__container__edit-profile">
                 <form class="modal__form">
                     <h2 class="modal__title">Edit profile</h2>
                     <fieldset class="modal__input-fieldset">
@@ -47,9 +48,21 @@
                     </fieldset>
                     <button type="submit" class="modal__submit-btn">Save</button>
                 </form>
-                <button type="button" class="modal__close-btn">
-                </button>
+                <button type="button" class="modal__close-btn"></button>
             </div>
+
+            <div class="modal__container modal__container__add-card">
+                <form class="modal__form">
+                    <h2 class="modal__title">New place</h2>
+                    <fieldset class="modal__input-fieldset">
+                        <input type="text" class="modal__input modal__input_place-name" placeholder="Title" onclick="this.select()">
+                        <input type="text" class="modal__input modal__input_place-pic-url" placeholder="Image link" onclick="this.select()">
+                    </fieldset>
+                    <button type="submit" class="modal__submit-btn">Save</button>
+                </form>
+                <button type="button" class="modal__close-btn"></button>
+            </div>
+            
         </div>
     </div>
     <template id="card">
