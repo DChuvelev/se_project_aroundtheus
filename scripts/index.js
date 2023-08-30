@@ -38,7 +38,6 @@ const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const cardTemplate = document.querySelector("#card").content;
 const cards = document.querySelector(".elements__cards");
-const zero = 0;
 
 const modalBackground = document.querySelector(".modal");
 
