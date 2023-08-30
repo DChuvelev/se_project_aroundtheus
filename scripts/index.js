@@ -1,8 +1,8 @@
-const initialCards = [
+const cardsArray = [
     {
         name:   "Yosemite Valley",
         link:   "./images/yosemite.jpg",
-        alt:    "Yosemite Valley at sunrise"    
+        alt:    "Yosemite Valley at sunrise"
     },
     {
         name:   "Lake Louise",
@@ -40,38 +40,95 @@ const cardTemplate = document.querySelector("#card").content;
 const cards = document.querySelector(".elements__cards");
 const zero = 0;
 
-const modalForm = document.querySelector(".modal__form");
+const modalBackground = document.querySelector(".modal");
+
+const modalForms = document.querySelectorAll(".modal__form");
+const modalCloseBtns = document.querySelectorAll(".modal__close-btn");
+
+const editProfileModalBox = document.querySelector(".modal__container_edit-profile");
 const modalTitleInput = document.querySelector(".modal__input_profile-name");
 const modalDescriptionInput = document.querySelector(".modal__input_profile-description");
-const modalCloseBtns = document.querySelectorAll(".modal__close-btn");
-const modalSubmitBtn = document.querySelector(".modal__submit-btn");
-const editProfileModalBox = document.querySelector(".modal__container__edit-profile");
-const addCardModalBox = document.querySelector(".modal__container__add-card");
 
+const addCardModalBox = document.querySelector(".modal__container_add-card");
+const modalPlaceInput = document.querySelector(".modal__input_place-name");
+const modalPlacePicUrlInput = document.querySelector(".modal__input_place-pic-url");
+
+const imageModalBox = document.querySelector(".modal__container_picture");
+const modalPicture = imageModalBox.querySelector(".modal__picture");
+const modalPictureCaption = imageModalBox.querySelector(".modal__picture-caption");
 
 function openEditProfileModalBox() {
-    editProfileModalBox.parentElement.classList.add("modal_opened");    //Darken background
+    modalBackground.classList.add("modal_opened");    //Darken background
     editProfileModalBox.classList.add("modal__container_opened");   //Open box
     modalTitleInput.value = profileTitle.textContent;
     modalDescriptionInput.value = profileDescription.textContent;
 }
+
 function openAddCardModalBox() {
-    addCardModalBox.parentElement.classList.add("modal_opened");    //Darken background
+    modalPlaceInput.value = '';
+    modalPlacePicUrlInput.value = '';
+    modalBackground.classList.add("modal_opened");    //Darken background
     addCardModalBox.classList.add("modal__container_opened");   //Open box
-    // modalTitleInput.value = profileTitle.textContent;
-    // modalDescriptionInput.value = profileDescription.textContent;
+}
+
+function openImageModalBox(evt) {
+    modalBackground.classList.add("modal_opened");    //Darken background
+    imageModalBox.classList.add("modal__container_opened");   //Open box
+    modalPicture.src = evt.target.src;
+    modalPicture.alt = evt.target.alt;
+    modalPictureCaption.textContent = evt.target.closest(".card").querySelector(".card__caption").textContent;
 }
 
 function closeModalBox(evt) {
-    evt.target.parentElement.classList.remove("modal__container_opened");   //Close box
-    evt.target.parentElement.parentElement.classList.remove("modal_opened");   //Remove dark background
+    evt.target.closest(".modal__container").classList.remove("modal__container_opened");   //Close box
+    modalBackground.classList.remove("modal_opened");   //Remove dark background
 }
-function submitFormProfile(evt) {
-    evt.preventDefault();
+
+function submitFormProfile() {
     profileTitle.textContent = modalTitleInput.value;
     profileDescription.textContent = modalDescriptionInput.value;
-    closeModalBox();
 }
+
+function likeCard(evt) {
+    evt.target.classList.toggle("card__button-heart_active");
+}
+
+function deleteCard(evt) {
+    evt.target.closest(".card").remove();
+}
+
+function addCardToPage(card) {
+    addedCard = getCardElement(card)
+    cards.append(addedCard);
+
+    const cardLikeBtn = addedCard.querySelector(".card__button-heart");
+    cardLikeBtn.addEventListener("click", likeCard);
+
+    const cardDeleteBtn = addedCard.querySelector(".card__button-delete");
+    cardDeleteBtn.addEventListener("click", deleteCard);
+
+    const cardImage = addedCard.querySelector(".card__image");
+    cardImage.addEventListener("click", openImageModalBox);
+}
+
+function submitFormAddCard() {
+    const newCard = {name: `${modalPlaceInput.value}`, link: `${modalPlacePicUrlInput.value}`, alt: `${modalPlaceInput.value}`};
+    addCardToPage(newCard);
+}
+
+function submitForm(evt) {
+    evt.preventDefault();
+    switch (evt.target.parentElement.classList[1]) {
+        case 'modal__container_edit-profile': 
+            submitFormProfile();
+            break;
+        case 'modal__container_add-card': 
+            submitFormAddCard();
+            break;
+    }
+    closeModalBox(evt);
+}
+
 function getCardElement(cardData) {
     const resultCard = cardTemplate.querySelector(".card").cloneNode(true);
     resultCard.querySelector(".card__caption").textContent = cardData.name;
@@ -83,9 +140,6 @@ function getCardElement(cardData) {
 
 editProfileBtn.addEventListener("click", openEditProfileModalBox);
 addCardBtn.addEventListener("click", openAddCardModalBox);
-modalCloseBtns.forEach((btn) => {addEventListener("click", closeModalBox)});
-modalForm.addEventListener("submit", submitFormProfile);
-
-initialCards.forEach ((card) => {
-    cards.append(getCardElement(card));
-});
+modalCloseBtns.forEach((btn) => {btn.addEventListener("click", closeModalBox)});
+modalForms.forEach((form) => {form.addEventListener("submit", submitForm)});
+cardsArray.forEach ((card) => {addCardToPage(card);});

@@ -39,7 +39,7 @@
         </footer>
         <div class="modal">
 
-            <div class="modal__container modal__container__edit-profile">
+            <div class="modal__container modal__container_edit-profile">
                 <form class="modal__form">
                     <h2 class="modal__title">Edit profile</h2>
                     <fieldset class="modal__input-fieldset">
@@ -51,16 +51,22 @@
                 <button type="button" class="modal__close-btn"></button>
             </div>
 
-            <div class="modal__container modal__container__add-card">
+            <div class="modal__container modal__container_add-card">
                 <form class="modal__form">
                     <h2 class="modal__title">New place</h2>
                     <fieldset class="modal__input-fieldset">
-                        <input type="text" class="modal__input modal__input_place-name" placeholder="Title" onclick="this.select()">
-                        <input type="text" class="modal__input modal__input_place-pic-url" placeholder="Image link" onclick="this.select()">
+                        <input type="text" class="modal__input modal__input_place-name" placeholder="Title">
+                        <input type="text" class="modal__input modal__input_place-pic-url" placeholder="Image link">
                     </fieldset>
                     <button type="submit" class="modal__submit-btn">Save</button>
                 </form>
                 <button type="button" class="modal__close-btn"></button>
+            </div>
+
+            <div class="modal__container modal__container_picture">
+                <img class="modal__picture">
+                <p class="modal__picture-caption"></p>
+                <button type="button" class="modal__close-btn modal__close-btn_picture"></button>
             </div>
             
         </div>
@@ -70,6 +76,7 @@
             <img class="card__image" src="" alt="">
             <h2 class="card__caption"></h2>
             <button class="card__button-heart" type="button"></button>
+            <button class="card__button-delete" type="button"></button>
         </li>    
     </template>
     <script src="./scripts/index.js"></script>

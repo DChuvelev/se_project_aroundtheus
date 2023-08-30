@@ -1,4 +1,5 @@
 .card {
+    position: relative;
     width: 100%;
     display: grid;
     grid-template-columns: 213px 69px;
@@ -44,6 +45,28 @@
     margin: auto 20px auto auto;
 }
 
+.card__button-heart_active {
+    background-image: url(../images/heart-icon-active.svg);    
+}
+
 .card__button-heart:hover {
     opacity: 0.5;
+}
+
+.card__button-delete {
+    position: absolute;
+    background-image: url(../images/trash-icon.svg);
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+    width: 18px;
+    height: 20px;
+    top: 15px;
+    right: 18px;
+}
+
+.card__button-delete:hover {
+    opacity: 0.6;
 }
