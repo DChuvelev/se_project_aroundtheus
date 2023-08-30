@@ -10,7 +10,7 @@
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0);
-;}
+}
 
 .modal_opened {
     visibility: visible;
