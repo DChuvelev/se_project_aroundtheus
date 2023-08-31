@@ -59,15 +59,19 @@ function openModalBox(box) {
     box.classList.add("modal_opened");
 }
 
-function closeModalBox(evt) {
-    evt.target.closest(".modal").classList.remove("modal_opened");
+function closeModalBox(box) {
+    box.classList.remove("modal_opened");
+}
+
+function closeClosestModal(evt) {
+    closeModalBox(evt.target.closest(".modal"));
 }
 
 function submitFormProfile(evt) {
     evt.preventDefault();
     profileTitle.textContent = modalTitleInput.value;
     profileDescription.textContent = modalDescriptionInput.value;
-    closeModalBox(evt);
+    closeClosestModal(evt);
 }
 
 function likeCard(evt) {
@@ -83,9 +87,8 @@ function submitFormAddCard(evt) {
     const newCard = {name: `${modalPlaceInput.value}`, link: `${modalPlacePicUrlInput.value}`, alt: `${modalPlaceInput.value}`};
     const addedCard = getCardElement(newCard)
     cards.prepend(addedCard);    
-    closeModalBox(evt);
-    modalPlaceInput.value = '';
-    modalPlacePicUrlInput.value = '';
+    closeClosestModal(evt);
+    addCardForm.reset();
 }
 
 function getCardElement(cardData) {
@@ -101,12 +104,11 @@ function getCardElement(cardData) {
     const cardDeleteBtn = resultCard.querySelector(".card__button-delete");
     cardDeleteBtn.addEventListener("click", deleteCard);
 
-    const cardImage = resultCard.querySelector(".card__image");
-    cardImage.addEventListener("click", (evt) => {
+    resultCardImage.addEventListener("click", () => {
         openModalBox(imageModalBox);
-        modalPicture.src = evt.target.src;
-        modalPicture.alt = evt.target.alt;
-        modalPictureCaption.textContent = evt.target.closest(".card").querySelector(".card__caption").textContent;
+        modalPicture.src = cardData.link;
+        modalPicture.alt = cardData.alt;
+        modalPictureCaption.textContent = cardData.name;
     });
 
     return resultCard;
@@ -122,7 +124,7 @@ addCardBtn.addEventListener("click", () => {
     openModalBox(addCardModalBox);
 });
 
-modalCloseBtns.forEach((btn) => {btn.addEventListener("click", closeModalBox)});
+modalCloseBtns.forEach((btn) => {btn.addEventListener("click", closeClosestModal)});
 
 editProfileForm.addEventListener("submit", submitFormProfile);
 addCardForm.addEventListener("submit", submitFormAddCard);
