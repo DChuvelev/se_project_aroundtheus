@@ -37,10 +37,10 @@
                 © 2022 Around The U.S.
             </p>
         </footer>
-        <div class="modal">
 
-            <div class="modal__container modal__container_edit-profile">
-                <form class="modal__form">
+        <div class="modal" id="edit-profile-modal">
+            <div class="modal__content">
+                <form class="modal__form" name="edit-profile-form">
                     <h2 class="modal__title">Edit profile</h2>
                     <fieldset class="modal__input-fieldset">
                         <input type="text" class="modal__input modal__input_profile-name" placeholder="Name" onclick="this.select()">
@@ -50,9 +50,11 @@
                 </form>
                 <button type="button" class="modal__close-btn"></button>
             </div>
+        </div>
 
-            <div class="modal__container modal__container_add-card">
-                <form class="modal__form">
+        <div class="modal" id="add-card-modal">
+            <div class="modal__content">
+                <form class="modal__form" name="add-card-form">
                     <h2 class="modal__title">New place</h2>
                     <fieldset class="modal__input-fieldset">
                         <input type="text" class="modal__input modal__input_place-name" placeholder="Title">
@@ -62,13 +64,14 @@
                 </form>
                 <button type="button" class="modal__close-btn"></button>
             </div>
+        </div>
 
-            <div class="modal__container modal__container_picture">
+        <div class="modal" id="show-pic-modal">
+            <div class="modal__content modal__content_type_picture">
                 <img class="modal__picture" src=# alt=#>
                 <p class="modal__picture-caption"></p>
                 <button type="button" class="modal__close-btn modal__close-btn_picture"></button>
-            </div>
-            
+            </div>            
         </div>
     </div>
     <template id="card">

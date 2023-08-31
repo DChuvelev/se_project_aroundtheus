@@ -1,5 +1,5 @@
 .modal {
-    transition: visibility 1s steps(2, jump-start), background-color 0.5s linear;
+    transition: visibility 1s steps(2, jump-start), opacity 0.5s linear;
     display: inline-flex;
     visibility: hidden;
     position: fixed;
@@ -9,18 +9,20 @@
     align-items: center;
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
 }
 
 .modal_opened {
     visibility: visible;
-    background-color: rgba(0, 0, 0, 0.5);
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    opacity: 1;
 }
 
-.modal__container {
-    visibility: hidden;
-    position: absolute;
-    transition: visibility 1s steps(2, jump-start), opacity 0.5s linear;
+.modal__content {
+    /* visibility: hidden;
+    transition: visibility 1s steps(2, jump-start), opacity 0.5s linear; */
+    position: relative;
     display: block;
     box-sizing: border-box;
     width: 430px;
@@ -29,13 +31,13 @@
     border: 1px solid black;
     border-radius: 10px;
     box-shadow: 0 0 25px 0 black;
-    opacity: 0;
+    /* opacity: 0; */
 }
 
-.modal__container_opened {
+/* .modal__container_opened {
     visibility: visible;
     opacity: 1;
-}
+} */
 
 .modal__form {
     display: flex;
@@ -119,7 +121,7 @@
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-.modal__container_picture {
+.modal__content_type_picture {
     margin: 0;
     padding: 0;
     border: none;
@@ -147,12 +149,12 @@
 }
 
 @media screen and (max-width: 648px) {
-    .modal__container {
+    .modal__content {
         width: 282px;
         padding: 25px 22px;
     }
 
-    .modal__container_picture {
+    .modal__content_type_picture {
         width: 240px;
         padding: 0;
     }
