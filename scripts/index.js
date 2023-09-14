@@ -56,6 +56,7 @@ const modalPicture = imageModalBox.querySelector(".modal__picture");
 const modalPictureCaption = imageModalBox.querySelector(".modal__picture-caption");
 
 function openModalBox(box) {
+    resetValidation(box);
     box.classList.add("modal_opened");
 }
 
@@ -115,9 +116,9 @@ function getCardElement(cardData) {
 }
 
 editProfileBtn.addEventListener("click", () => {
-    openModalBox(editProfileModalBox);
     modalTitleInput.value = profileTitle.textContent;
     modalDescriptionInput.value = profileDescription.textContent;
+    openModalBox(editProfileModalBox);
 });
 
 addCardBtn.addEventListener("click", () => {
