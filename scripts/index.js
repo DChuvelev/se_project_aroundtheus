@@ -56,14 +56,33 @@ const modalPicture = imageModalBox.querySelector(".modal__picture");
 const modalPictureCaption = imageModalBox.querySelector(".modal__picture-caption");
 
 const allModals = Array.from(document.querySelectorAll(".modal"));
+var modalOpened = null;
+
+const escapeListener = (evt) => {
+    if (evt.key === "Escape") {
+        closeModalBox(modalOpened);
+    }
+}
+
+const addEscapeListener = () => {
+    document.addEventListener("keydown", escapeListener);
+};
+
+const removeEscapeListener = () => {
+    document.removeEventListener("keydown", escapeListener);
+};
 
 function openModalBox(box) {
     resetValidation(box);
     box.classList.add("modal_opened");
+    modalOpened = box;
+    addEscapeListener();    
 }
 
 function closeModalBox(box) {
     box.classList.remove("modal_opened");
+    removeEscapeListener();
+    modalOpened = null;    
 }
 
 function closeClosestModal(evt) {
@@ -135,15 +154,6 @@ allModals.forEach((modal) => {
             closeClosestModal(evt);
         }
     });
-});
-
-document.addEventListener("keydown", (evt) => {
-    console.log(evt.key);
-    if (evt.key === "Escape") {
-        allModals.forEach((modal) => {
-            closeModalBox(modal);
-        });
-    }
 });
 
 editProfileForm.addEventListener("submit", submitFormProfile);
