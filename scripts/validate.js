@@ -2,7 +2,6 @@ const inputFormsInfo = {
     formSelector: ".modal__form",
     inputSelector: ".modal__input",
     submitButtonSelector: ".modal__submit-btn",
-    inactiveButtonClass: "modal__submit-btn_disabled",      // do I really need it? I used :disabled pseudo-class instead
     inputErrorClass: "modal__input_type_error",
     errorClass: "modal__error_visible"                      
 }
@@ -17,7 +16,7 @@ const showInputError = (formElement, inputElement, errorMessage, inputErrorClass
 const hideInputError = (formElement, inputElement, inputErrorClass, errorClass) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(inputErrorClass);
-    errorElement.classList.remove(errorClass);          // do I need this? Why the next line is not enough?
+    errorElement.classList.remove(errorClass);
     errorElement.textContent = '';
 }
 
@@ -36,45 +35,42 @@ const hasInvalidInput = (inputList) => {
     });
 }
 
-const toggleSubmitButton = (buttonElement, inactiveButtonClass, inputList) => {
+const toggleSubmitButton = (buttonElement, inputList) => {
     if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add(inactiveButtonClass);       // ???
         buttonElement.disabled = true;
     } else {
-        buttonElement.classList.remove(inactiveButtonClass);    // ???
         buttonElement.disabled = false;
     }
 
 }
 
 
-const setEventListeners = ({formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}) => {
+const setEventListeners = ({formElement, inputSelector, submitButtonSelector, inputErrorClass, errorClass}) => {
     const inputList = Array.from(formElement.querySelectorAll(inputSelector));
     const buttonElement = formElement.querySelector(submitButtonSelector);
-    toggleSubmitButton(buttonElement, inactiveButtonClass, inputList);
+    toggleSubmitButton(buttonElement, inputList);
     inputList.forEach((inputElement) => {
         inputElement.addEventListener("input", () => {
             checkInputValidity(formElement, inputElement, inputErrorClass, errorClass);
-            toggleSubmitButton(buttonElement, inactiveButtonClass, inputList);
+            toggleSubmitButton(buttonElement, inputList);
         });
     });
-
 }
 
 
-const enableValidation = ({formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}) => {
+const enableValidation = ({formSelector, inputSelector, submitButtonSelector, inputErrorClass, errorClass}) => {
     const formList = Array.from(document.querySelectorAll(formSelector));
     formList.forEach((formElement) => {
         formElement.addEventListener("submit", (evt) => {
             evt.preventDefault();
         });
-        setEventListeners({formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass});
+        setEventListeners({formElement, inputSelector, submitButtonSelector, inputErrorClass, errorClass});
     });    
 }
 
 const resetValidation = (modalBox) => {
     const simulateInputEvent = new Event("input");
-    const formInputs = Array.from(modalBox.querySelectorAll(".modal__input"));
+    const formInputs = Array.from(modalBox.querySelectorAll(inputFormsInfo.inputSelector));
     formInputs.forEach((modalInput) => {modalInput.dispatchEvent(simulateInputEvent);});
 }
 

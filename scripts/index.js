@@ -56,37 +56,36 @@ const modalPicture = imageModalBox.querySelector(".modal__picture");
 const modalPictureCaption = imageModalBox.querySelector(".modal__picture-caption");
 
 const allModals = Array.from(document.querySelectorAll(".modal"));
-var modalOpened = null;
+let modalOpened = null;
 
-const escapeListener = (evt) => {
+const handleEscape = (evt) => {
     if (evt.key === "Escape") {
-        closeModalBox(modalOpened);
+        closeModalBox();
     }
 }
 
 const addEscapeListener = () => {
-    document.addEventListener("keydown", escapeListener);
+    document.addEventListener("keydown", handleEscape);
 };
 
 const removeEscapeListener = () => {
-    document.removeEventListener("keydown", escapeListener);
+    document.removeEventListener("keydown", handleEscape);
 };
 
 function openModalBox(box) {
-    resetValidation(box);
     box.classList.add("modal_opened");
     modalOpened = box;
     addEscapeListener();    
 }
 
-function closeModalBox(box) {
-    box.classList.remove("modal_opened");
+function closeModalBox() {
+    modalOpened.classList.remove("modal_opened");
     removeEscapeListener();
     modalOpened = null;    
 }
 
-function closeClosestModal(evt) {
-    closeModalBox(evt.target.closest(".modal"));
+function closeClosestModal() {
+    closeModalBox();
 }
 
 function submitFormProfile(evt) {
@@ -139,17 +138,19 @@ function getCardElement(cardData) {
 editProfileBtn.addEventListener("click", () => {
     modalTitleInput.value = profileTitle.textContent;
     modalDescriptionInput.value = profileDescription.textContent;
+    resetValidation(editProfileModalBox);
     openModalBox(editProfileModalBox);
 });
 
 addCardBtn.addEventListener("click", () => {
+    resetValidation(addCardModalBox);
     openModalBox(addCardModalBox);
 });
 
 modalCloseBtns.forEach((btn) => {btn.addEventListener("click", closeClosestModal)});
 
 allModals.forEach((modal) => {
-    modal.addEventListener("click", (evt) => {
+    modal.addEventListener("mousedown", (evt) => {
         if (evt.target === evt.currentTarget) {
             closeClosestModal(evt);
         }
