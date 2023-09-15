@@ -55,6 +55,8 @@ const imageModalBox = document.querySelector("#show-pic-modal");
 const modalPicture = imageModalBox.querySelector(".modal__picture");
 const modalPictureCaption = imageModalBox.querySelector(".modal__picture-caption");
 
+const allModals = Array.from(document.querySelectorAll(".modal"));
+
 function openModalBox(box) {
     resetValidation(box);
     box.classList.add("modal_opened");
@@ -126,6 +128,23 @@ addCardBtn.addEventListener("click", () => {
 });
 
 modalCloseBtns.forEach((btn) => {btn.addEventListener("click", closeClosestModal)});
+
+allModals.forEach((modal) => {
+    modal.addEventListener("click", (evt) => {
+        if (evt.target === evt.currentTarget) {
+            closeClosestModal(evt);
+        }
+    });
+});
+
+document.addEventListener("keydown", (evt) => {
+    console.log(evt.key);
+    if (evt.key === "Escape") {
+        allModals.forEach((modal) => {
+            closeModalBox(modal);
+        });
+    }
+});
 
 editProfileForm.addEventListener("submit", submitFormProfile);
 addCardForm.addEventListener("submit", submitFormAddCard);

@@ -2,9 +2,9 @@ const inputFormsInfo = {
     formSelector: ".modal__form",
     inputSelector: ".modal__input",
     submitButtonSelector: ".modal__submit-btn",
-    inactiveButtonClass: "modal__submit-btn_disabled",      // do I realy need it? I used :disabled pseudo-class instead
+    inactiveButtonClass: "modal__submit-btn_disabled",      // do I really need it? I used :disabled pseudo-class instead
     inputErrorClass: "modal__input_type_error",
-    errorClass: "modal__error_visible"
+    errorClass: "modal__error_visible"                      
 }
 
 const showInputError = (formElement, inputElement, errorMessage, inputErrorClass, errorClass) => {
@@ -17,7 +17,7 @@ const showInputError = (formElement, inputElement, errorMessage, inputErrorClass
 const hideInputError = (formElement, inputElement, inputErrorClass, errorClass) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(inputErrorClass);
-    errorElement.classList.remove(errorClass);
+    errorElement.classList.remove(errorClass);          // do I need this? Why the next line is not enough?
     errorElement.textContent = '';
 }
 
@@ -38,10 +38,10 @@ const hasInvalidInput = (inputList) => {
 
 const toggleSubmitButton = (buttonElement, inactiveButtonClass, inputList) => {
     if (hasInvalidInput(inputList)) {
-        // buttonElement.classList.add(inactiveButtonClass);
+        buttonElement.classList.add(inactiveButtonClass);       // ???
         buttonElement.disabled = true;
     } else {
-        // buttonElement.classList.remove(inactiveButtonClass);
+        buttonElement.classList.remove(inactiveButtonClass);    // ???
         buttonElement.disabled = false;
     }
 
@@ -68,7 +68,6 @@ const enableValidation = ({formSelector, inputSelector, submitButtonSelector, in
         formElement.addEventListener("submit", (evt) => {
             evt.preventDefault();
         });
-        // const fieldsetList = Array.from(formElement.querySelectorAll(".modal__input-fieldset"));
         setEventListeners({formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass});
     });    
 }
