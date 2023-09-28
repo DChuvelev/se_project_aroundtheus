@@ -39,7 +39,7 @@ export class FormValidator {
 
     _setSubmitButtonState() {
         if (this._hasInvalidInput()) {
-            this._buttonElement.disabled = true;
+            this.disableSubmitButton();
         } else {
             this._buttonElement.disabled = false;
         }
