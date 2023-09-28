@@ -1,3 +1,7 @@
+import {Card} from "../components/Card.js";
+import {FormValidator} from "../components/FormValidator.js";
+
+
 const cardsArray = [
     {
         name:   "Yosemite Valley",
@@ -58,6 +62,13 @@ const modalPictureCaption = imageModalBox.querySelector(".modal__picture-caption
 const allModals = Array.from(document.querySelectorAll(".modal"));
 let modalOpened = null;
 
+const inputFormsInfo = {
+    inputSelector: ".modal__input",
+    submitButtonSelector: ".modal__submit-btn",
+    inputErrorClass: "modal__input_type_error",
+    errorClass: "modal__error_visible"                      
+}
+
 const handleEscape = (evt) => {
     if (evt.key === "Escape") {
         closeModalBox();
@@ -84,75 +95,43 @@ function closeModalBox() {
     modalOpened = null;    
 }
 
-function closeClosestModal() {
-    closeModalBox();
-}
-
 function submitFormProfile(evt) {
     evt.preventDefault();
     profileTitle.textContent = modalTitleInput.value;
     profileDescription.textContent = modalDescriptionInput.value;
-    closeClosestModal(evt);
-}
-
-function likeCard(evt) {
-    evt.target.classList.toggle("card__button-heart_active");
-}
-
-function deleteCard(evt) {
-    evt.target.closest(".card").remove();
+    closeModalBox();
 }
 
 function submitFormAddCard(evt) {
     evt.preventDefault();
-    const newCard = {name: `${modalPlaceInput.value}`, link: `${modalPlacePicUrlInput.value}`, alt: `${modalPlaceInput.value}`};
-    const addedCard = getCardElement(newCard)
+    const newCard = new Card({name: `${modalPlaceInput.value}`, link: `${modalPlacePicUrlInput.value}`, alt: `${modalPlaceInput.value}`}, cardTemplate, handleImageClick);
+    const addedCard = newCard.getCardElement();
     cards.prepend(addedCard);    
-    closeClosestModal(evt);
+    closeModalBox();
     addCardForm.reset();
-}
-
-function getCardElement(cardData) {
-    const resultCard = cardTemplate.querySelector(".card").cloneNode(true);
-    resultCard.querySelector(".card__caption").textContent = cardData.name;
-    const resultCardImage = resultCard.querySelector(".card__image");
-    resultCardImage.src = cardData.link;
-    resultCardImage.alt = cardData.alt;
-
-    const cardLikeBtn = resultCard.querySelector(".card__button-heart");
-    cardLikeBtn.addEventListener("click", likeCard);
-
-    const cardDeleteBtn = resultCard.querySelector(".card__button-delete");
-    cardDeleteBtn.addEventListener("click", deleteCard);
-
-    resultCardImage.addEventListener("click", () => {
-        openModalBox(imageModalBox);
-        modalPicture.src = cardData.link;
-        modalPicture.alt = cardData.alt;
-        modalPictureCaption.textContent = cardData.name;
-    });
-
-    return resultCard;
 }
 
 editProfileBtn.addEventListener("click", () => {
     modalTitleInput.value = profileTitle.textContent;
     modalDescriptionInput.value = profileDescription.textContent;
-    resetValidation(editProfileModalBox);
+    editProfileFormValidator.resetValidation();
+    if (profileTitle.textContent === modalTitleInput.value && profileDescription.textContent === modalDescriptionInput.value) {
+        editProfileFormValidator.disableSubmitButton();
+    }
     openModalBox(editProfileModalBox);
 });
 
 addCardBtn.addEventListener("click", () => {
-    resetValidation(addCardModalBox);
+    addCardFormValidator.resetValidation();
     openModalBox(addCardModalBox);
 });
 
-modalCloseBtns.forEach((btn) => {btn.addEventListener("click", closeClosestModal)});
+modalCloseBtns.forEach((btn) => {btn.addEventListener("click", closeModalBox)});
 
 allModals.forEach((modal) => {
     modal.addEventListener("mousedown", (evt) => {
         if (evt.target === evt.currentTarget) {
-            closeClosestModal(evt);
+            closeModalBox();
         }
     });
 });
@@ -160,7 +139,21 @@ allModals.forEach((modal) => {
 editProfileForm.addEventListener("submit", submitFormProfile);
 addCardForm.addEventListener("submit", submitFormAddCard);
 
-cardsArray.forEach((card) => {
-    const addedCard = getCardElement(card)
-    cards.append(addedCard);
+const handleImageClick = function(card) {
+    console.log(card);
+    openModalBox(imageModalBox);
+    modalPicture.src = card.getCardLink();
+    modalPicture.alt = card.getCardAltInfo();
+    modalPictureCaption.textContent = card.getCardName();
+}
+
+cardsArray.forEach((cardInfo) => {
+    const newCard = new Card(cardInfo, cardTemplate, handleImageClick);
+    const newCardElement = newCard.getCardElement();
+    cards.append(newCardElement);
 });
+
+const addCardFormValidator = new FormValidator(inputFormsInfo, addCardForm);
+const editProfileFormValidator = new FormValidator(inputFormsInfo, editProfileForm);
+addCardFormValidator.enableValidation();
+editProfileFormValidator.enableValidation();
