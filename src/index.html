@@ -42,9 +42,9 @@
                 <form class="modal__form" name="edit-profile-form">
                     <h2 class="modal__title">Edit profile</h2>
                     <fieldset class="modal__input-fieldset">
-                        <input type="text" id="profile-input" class="modal__input modal__input_profile-name" placeholder="Name" onclick="this.select()" minlength="2" maxlength="40" required>
+                        <input type="text" name="profile-input" class="modal__input modal__input_profile-name" placeholder="Name" onclick="this.select()" minlength="2" maxlength="40" required>
                         <p class="modal__input-error profile-input-error"></p>
-                        <input type="text" id="profile-description-input" class="modal__input modal__input_profile-description" placeholder="Description" onclick="this.select()" minlength="2" maxlength="200" required>
+                        <input type="text" name="profile-description-input" class="modal__input modal__input_profile-description" placeholder="Description" onclick="this.select()" minlength="2" maxlength="200" required>
                         <p class="modal__input-error profile-description-input-error"></p>
                     </fieldset>
                     <button type="submit" class="modal__submit-btn">Save</button>
@@ -58,9 +58,9 @@
                 <form class="modal__form" name="add-card-form">
                     <h2 class="modal__title">New place</h2>
                     <fieldset class="modal__input-fieldset">
-                        <input type="text" id="place-name-input" class="modal__input modal__input_place-name" placeholder="Title" minlength="1" maxlength="30" required>
+                        <input type="text" name="place-name-input" class="modal__input modal__input_place-name" placeholder="Title" minlength="1" maxlength="30" required>
                         <p class="modal__input-error place-name-input-error"></p>
-                        <input type="url" id="place-url-input" class="modal__input modal__input_place-pic-url" placeholder="Image link" required>
+                        <input type="url" name="place-url-input" class="modal__input modal__input_place-pic-url" placeholder="Image link" required>
                         <p class="modal__input-error place-url-input-error"></p>
                     </fieldset>
                     <button type="submit" class="modal__submit-btn">Save</button>

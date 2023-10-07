@@ -60,10 +60,10 @@ export const formSelector = ".modal__form";
 export const profileTitleSelector = ".profile__title";
 export const profileDescriptionSelector = ".profile__description";
 
-export const modalTitleInputID = document.querySelector(".modal__input_profile-name").getAttribute('id');
-export const modalDescriptionInputID = document.querySelector(".modal__input_profile-description").getAttribute('id');
-export const modalPlaceInputID = document.querySelector(".modal__input_place-name").getAttribute('id');
-export const modalPlacePicUrlInputID = document.querySelector(".modal__input_place-pic-url").getAttribute('id');
+export const modalTitleInputName = document.querySelector(".modal__input_profile-name").name;
+export const modalDescriptionInputName = document.querySelector(".modal__input_profile-description").name;
+export const modalPlaceInputName = document.querySelector(".modal__input_place-name").name;
+export const modalPlacePicUrlInputName = document.querySelector(".modal__input_place-pic-url").name;
 
 export const addCardForm = document.forms['add-card-form'];
 export const editProfileBtn = document.querySelector(".profile__edit-button");

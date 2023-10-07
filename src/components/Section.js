@@ -12,9 +12,7 @@ export default class Section {
     }
 
     clear() {
-        while (this._container.firstChild) {
-            this._container.removeChild(this._container.firstChild);
-        }
+        this._container.innerHTML = "";
     }
     appendItem(element) {
         this._container.append(element);

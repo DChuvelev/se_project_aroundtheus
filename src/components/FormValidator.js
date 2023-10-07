@@ -10,14 +10,14 @@ export class FormValidator {
     }
 
     _showInputError(inputElement) {
-        const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+        const errorElement = this._formElement.querySelector(`.${inputElement.name}-error`);
         inputElement.classList.add(this._inputErrorClass);
         errorElement.classList.add(this._errorClass);
         errorElement.textContent = inputElement.validationMessage;
     };
 
     _hideInputError(inputElement) {
-        const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+        const errorElement = this._formElement.querySelector(`.${inputElement.name}-error`);
         inputElement.classList.remove(this._inputErrorClass);
         errorElement.classList.remove(this._errorClass);
         errorElement.textContent = '';
