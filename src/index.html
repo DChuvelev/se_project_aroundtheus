@@ -7,17 +7,16 @@
     <meta name="description" content="That's a long story">
     <meta name="keywords" content="Mountains, Lakes, Forests">
     <link rel="icon" href="./favicon.ico">
-    <link rel="stylesheet" href="./pages/index.css">
     <title>Around the U.S.</title>
 </head>
 <body class="page">
     <div class="page__content">
         <header class="header">
-            <img class= "header__image" src="./images/around-the-world-optimized.svg" alt="Around US logo">
+            <img class= "header__image" alt="Around US logo" src="<%=require('./images/around-the-world-optimized.svg')%>">
         </header>
         <main class="content">
             <section class="profile">
-                <img class="profile__image" src="./images/jacques-cousteau.jpg" alt="J. Cousteau in a red hat">
+                <img class="profile__image" alt="J. Cousteau in a red hat" src="<%=require('./images/jacques-cousteau.jpg')%>" >
                 <div class="profile__info">
                     <div class="profile__container-title-edit">
                         <h1 class="profile__title">Jacques Cousteau</h1>
@@ -86,6 +85,5 @@
             <button class="card__button-delete" type="button"></button>
         </li>    
     </template>
-    <script type="module" src="./pages/index.js"></script>
 </body>
 </html>
