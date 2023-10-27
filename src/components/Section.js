@@ -4,6 +4,7 @@ export default class Section {
         this._renderer = renderer;
         this._container = document.querySelector(containerSelector);
     }
+
     renderItems() {
         this.clear();
         this._items.forEach((item) => {
@@ -14,9 +15,11 @@ export default class Section {
     clear() {
         this._container.innerHTML = "";
     }
+
     appendItem(element) {
         this._container.append(element);
     }
+
     prependItem(element) {
         this._container.prepend(element);
     }
