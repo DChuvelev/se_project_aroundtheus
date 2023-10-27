@@ -19,8 +19,12 @@ export default class Card {
     }
 
     _handleLikeCard = (evt) => {
-        evt.target.classList.toggle("card__button-heart_active");
-        this._callApiLike(this._cardImageElement.id, evt.target.classList.contains("card__button-heart_active"));
+        this._callApiLike(this._cardImageElement.id, evt.target.classList.contains("card__button-heart_active")).then(res => {
+            evt.target.classList.toggle("card__button-heart_active");
+            return res;
+        }).catch(err => {
+            alert(err);
+        });
     }
 
     _handleDeleteCard = () => {
@@ -28,9 +32,11 @@ export default class Card {
     }
 
     deleteCard() {
-        this._removeEventListeners();
-        this._cardElement.remove();
-        this._callApiDelete(this._cardImageElement.id);    
+        return this._callApiDelete(this._cardImageElement.id).then((res) => {
+            this._removeEventListeners();
+            this._cardElement.remove();
+            return res;
+        })        
     }
 
     _callHandleImageClick = () => {

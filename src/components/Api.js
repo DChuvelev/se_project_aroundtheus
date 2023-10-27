@@ -5,93 +5,74 @@ export default class Api {
         console.log(this._baseUrl, this._headers);
     }
 
-    getInitialCards() {
-        return fetch(`${this._baseUrl}/cards`, {
-            headers: this._headers,
-            method: "GET"
-        }).then(res => {
+    _request(url, reqObj, errMsg) {
+        return fetch(url, reqObj).then(res => {
             if (res.ok) {
                 return res.json();
             } else {
-                return Promise.reject(`Error loading cards from server. Error number: ${res.status}`);
-            }
-        }).catch(err => {
-            console.log(err);
+                return Promise.reject(`${errMsg} Error number: ${res.status}`);
+            }    
         })
+    }
+
+    getInitialCards() {
+        return this._request(`${this._baseUrl}/cards`, {
+            headers: this._headers,
+            method: "GET"
+        }, 'Error loading cards from server.');
     }
 
     getUserInfo() {
-        return fetch(`${this._baseUrl}/users/me`, {
+        return this._request(`${this._baseUrl}/users/me`, {
             headers: this._headers,
             method: "GET"
-        }).then(res => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(`Error getting user info from server. Error number: ${res.status}`);
-            }
-        }).catch(err => {
-            console.log(err);
-        })
+        }, 'Error getting user info from server.');
     }
 
     setUserInfo({name, description}) {
-        return fetch(`${this._baseUrl}/users/me`, {
+        return this._request(`${this._baseUrl}/users/me`, {
             headers: this._headers,
             method: "PATCH",
             body: JSON.stringify({
                 name,
                 about: description
             })
-        }).then(res => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(`Error setting user info from server. Error number: ${res.status}`);
-            }
-        }).then(res => {
-            console.log("User info updated.");
-            return res;
-        })
+        }, 'Error setting user info from server.');
     }
 
     setUserAvatar(avatarUrl) {
-        console.log(avatarUrl);
-        return fetch(`${this._baseUrl}/users/me/avatar`, {
+        return this._request(`${this._baseUrl}/users/me/avatar`, {
             headers: this._headers,
             method: "PATCH",
             body: JSON.stringify({
                 avatar: avatarUrl
             })
-        })
-        .then(res => {
-            // console.log(res);
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(`Error updataing user avatar. Error number: ${res.status}. Possibly you typed in wrong URL.`);
-            }
-        }).then(res => {
-            console.log("User avatar updated successfully");
-            return res;
-        })
+        }, 'Error updataing user avatar. Possibly you typed in wrong URL.');
     }
 
     deleteCard(cardId) {
-        return fetch(`${this._baseUrl}/cards/${cardId}`, {
+        return this._request(`${this._baseUrl}/cards/${cardId}`, {
             headers: this._headers,
             method: "DELETE"
-        }).then(res => {
-            if (res.ok) {
-                console.log(`Card with ID: ${cardId} successfully deleted from server`);
-                return res.json();
-            } else {
-                return Promise.reject(`Error deleteng card from server. Error number: ${res.status}`);
-            }
-        }).catch(err => {
-            console.log(err);
-        })
+        }, 'Error deleteng card from server.');
     }
+
+    writeCard(cardInfo) {
+        return this._request(`${this._baseUrl}/cards`, {
+            headers: this._headers,
+            method: "POST",
+            body: JSON.stringify(cardInfo)
+        }, 'Error posting card to server. Possibly you typed in wrong URL.');
+    }
+
+    setCardLike(cardId, isLiked) {
+        return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
+            headers: this._headers,
+            method: `${isLiked ? "PUT" : "DELETE"}`,
+        }, 'Error writing like.');
+    }
+
+//  The folowing 2 functions are for technical usage only - they let me reset cards on the server to 6 default cards from the original array.
 
     deleteAllCards() {
         const promises = [];
@@ -101,52 +82,12 @@ export default class Api {
             })
         })
         return Promise.all(promises);
-    }
-
-    writeCard(cardInfo) {
-        console.log(cardInfo);
-        return fetch(`${this._baseUrl}/cards`, {
-            headers: this._headers,
-            method: "POST",
-            body: JSON.stringify(cardInfo)
-        })
-        .then(res => {
-            // console.log(res);
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(`Error posting card to server. Error number: ${res.status}. Possibly you typed in wrong URL.`);
-            }
-        }).then(res => {
-            console.log(`Card with ID: ${res._id} successfully posted to server`);
-            return res;
-        })
-    }
-
+    }    
     writeCards(cardsArray) {
         const promises = [];
         cardsArray.forEach(card => {
             promises.push(this.writeCard(card));
         });
         return Promise.all(promises).then(() => `Successfully posted ${promises.length} cards.`);
-    }
-
-    setCardLike(cardId, isLiked) {
-        return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-            headers: this._headers,
-            method: `${isLiked ? "PUT" : "DELETE"}`,
-        })
-        .then(res => {
-            console.log(res);
-            if (res.ok) {
-                return res.json();
-            } else {
-                return Promise.reject(`Error writing like. Error number: ${res.status}`);
-            }
-        }).then(() => {
-            console.log("Like set with success");
-        }).catch(err => {
-            console.log(err);
-        })    
     }
 }

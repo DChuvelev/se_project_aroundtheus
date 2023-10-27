@@ -27,12 +27,9 @@ export const cardsArray = [
 ];
 
 export const editProfilePopupSelector = "#edit-profile-modal";
-export const saveProfileInfoBtn = document.querySelector(editProfilePopupSelector).querySelector(".modal__submit-btn");
 export const editProfileAvatarPopupSelector = "#edit-profile-url-modal";
-export const saveProfileAvatarBtn = document.querySelector(editProfileAvatarPopupSelector).querySelector(".modal__submit-btn");
 export const confirmDeletePopupSelector = "#confirm-delete-modal";
 export const addCardPopupSelector = "#add-card-modal";
-export const saveNewCardBtn = document.querySelector(addCardPopupSelector).querySelector(".modal__submit-btn");
 export const imagePopupSelector = "#show-pic-modal";
 export const modalPictureSelector = ".modal__picture";
 export const modalPictureCaptionSelector = ".modal__picture-caption";
