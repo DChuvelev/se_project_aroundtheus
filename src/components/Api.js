@@ -51,9 +51,29 @@ export default class Api {
             }
         }).then(res => {
             console.log("User info updated.");
+            return res;
         })
-        .catch(err => {
-            console.log(err);
+    }
+
+    setUserAvatar(avatarUrl) {
+        console.log(avatarUrl);
+        return fetch(`${this._baseUrl}/users/me/avatar`, {
+            headers: this._headers,
+            method: "PATCH",
+            body: JSON.stringify({
+                avatar: avatarUrl
+            })
+        })
+        .then(res => {
+            // console.log(res);
+            if (res.ok) {
+                return res.json();
+            } else {
+                return Promise.reject(`Error updataing user avatar. Error number: ${res.status}. Possibly you typed in wrong URL.`);
+            }
+        }).then(res => {
+            console.log("User avatar updated successfully");
+            return res;
         })
     }
 

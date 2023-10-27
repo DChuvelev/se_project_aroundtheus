@@ -1,10 +1,10 @@
 export default class Card {
-    constructor (data, cardSelector, handleImageClick, confirmDelete, runApiDelete, runApiLike) {
+    constructor (data, cardSelector, handleImageClick, confirmDelete, callApiDelete, callApiLike) {
         this._cardSelector = cardSelector;
         this._handleImageClick = handleImageClick;
         this._confirmDelete = confirmDelete;
-        this._runApiDelete = runApiDelete;
-        this._runApiLike = runApiLike;
+        this._callApiDelete = callApiDelete;
+        this._callApiLike = callApiLike;
         this._cardElement = this._cardSelector.querySelector(".card").cloneNode(true);
         this._cardElementCaption = this._cardElement.querySelector(".card__caption");
         this._cardElementCaption.textContent = data.name;
@@ -20,17 +20,17 @@ export default class Card {
 
     _handleLikeCard = (evt) => {
         evt.target.classList.toggle("card__button-heart_active");
-        this._runApiLike(this._cardImageElement.id, evt.target.classList.contains("card__button-heart_active"));
+        this._callApiLike(this._cardImageElement.id, evt.target.classList.contains("card__button-heart_active"));
     }
 
-    _handleDeleteCard = (evt) => {
+    _handleDeleteCard = () => {
         this._confirmDelete(this);
     }
 
     deleteCard() {
         this._removeEventListeners();
         this._cardElement.remove();
-        this._runApiDelete(this._cardImageElement.id);    
+        this._callApiDelete(this._cardImageElement.id);    
     }
 
     _callHandleImageClick = () => {

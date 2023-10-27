@@ -14,9 +14,10 @@ import {
     cardsArray,
     cardsSectionSelector,
     editProfileBtn,
+    editProfileAvatarBtn,
     editProfilePopupSelector,
+    editProfileAvatarPopupSelector,
     confirmDeletePopupSelector,
-    confirmDeleteButtonSelector,
     addCardBtn,
     addCardPopupSelector,
     popupOpenedClass,
@@ -27,6 +28,7 @@ import {
     profileAvatarSelector,
     modalTitleInputName,
     modalDescriptionInputName,
+    modalProfileUrlInputName,
     modalPlaceInputName,
     modalPlacePicUrlInputName,
     imagePopupSelector,
@@ -35,7 +37,9 @@ import {
     formValidators,
     basicRequestInfo,
     resetCardsBtn,
-    getCardsBtn
+    saveProfileInfoBtn,
+    saveProfileAvatarBtn,
+    saveNewCardBtn
 } from "../utils/constants.js"
 
 
@@ -62,17 +66,24 @@ const user = new UserInfo({
     userAvatarSelector: profileAvatarSelector
 });
 
-// ------------- Edit Profile Part ---------------
+// ------------- Edit Profile Info Part ---------------
 
 function handleSubmitFormProfile(evt, inputValues) {
+    saveProfileInfoBtn.textContent = 'Saving...';
     evt.preventDefault();
+
     const newUserInfo = {
         name: `${inputValues[modalTitleInputName]}`,
         description: `${inputValues[modalDescriptionInputName]}`
     }
     user.setUserInfo(newUserInfo);
-    api.setUserInfo(newUserInfo);
-    editProfilePopup.close();
+    api.setUserInfo(newUserInfo).then((res) => {
+        user.setUserInfo(newUserInfo);
+    }).catch(err => {
+        alert(err);
+    }).finally (() => {
+        editProfilePopup.close();
+    })
 }
 
 const editProfilePopup = new PopupWithForm({
@@ -91,7 +102,42 @@ editProfileBtn.addEventListener("click", () => {
     editProfilePopup.setInputValues(data);
     formValidators['edit-profile-form'].resetValidation();
     formValidators['edit-profile-form'].disableSubmitButton();
+    saveProfileInfoBtn.textContent = 'Save';
     editProfilePopup.open();
+});
+
+// ------------- Edit Profile Avatar Part ---------------
+
+function handleSubmitFormProfileAvatar(evt, inputValues) {
+    saveProfileAvatarBtn.textContent = 'Saving...';
+    evt.preventDefault();    
+    api.setUserAvatar(inputValues[modalProfileUrlInputName]).then(res => {
+        console.log(res);
+        user.setUserAvatar(inputValues[modalProfileUrlInputName]);
+    }).catch (err => {
+        alert(err);
+    }).finally(() => {
+        editProfileAvatarPopup.close();
+    });
+}
+
+const editProfileAvatarPopup = new PopupWithForm({
+    popupSelector: editProfileAvatarPopupSelector, 
+    popupOpenedClass, 
+    closeButtonSelector
+}, formSelector, handleSubmitFormProfileAvatar);
+
+editProfileAvatarPopup.setEventListeners();
+
+editProfileAvatarBtn.addEventListener("click", () => {
+    const data = {};
+    data[modalProfileUrlInputName] = user.getUserAvatar();
+    editProfileAvatarPopup.setInputValues(data);
+
+    formValidators['edit-profile-url-form'].resetValidation();
+    formValidators['edit-profile-url-form'].disableSubmitButton();
+    saveProfileAvatarBtn.textContent = 'Save';
+    editProfileAvatarPopup.open();
 });
 
 // ------------- Api Part ---------------
@@ -100,12 +146,6 @@ function resetCards() {
     console.log("Cards delete");
     api.deleteAllCards().then(() => {
         api.writeCards(cardsArray);
-    });
-}
-
-function getCards() {
-    api.getInitialCards().then(res => {
-        console.log(res);
     });
 }
 
@@ -120,7 +160,6 @@ function apiLikeCard(id, isLiked) {
 }
 
 resetCardsBtn.addEventListener("click", resetCards);
-getCardsBtn.addEventListener("click", getCards);
 
 const api = new Api(basicRequestInfo);
 const getInitialCardsPromise = api.getInitialCards();
@@ -141,6 +180,8 @@ Promise.all(promises).then(results => {
     //-------------------- Fill user info with recieved data ---------------------
     user.setUserInfo({name: results[1].name, description: results[1].about});
     user.setUserAvatar(results[1].avatar);
+}).catch(err => {
+    allert(err);
 })
 
 
@@ -148,6 +189,7 @@ Promise.all(promises).then(results => {
 // ------------- Add Card Part ---------------
 
 function handleSubmitFormAddCard(evt, inputValues) {
+    saveNewCardBtn.textContent = 'Saving...';
     evt.preventDefault();
     api.writeCard({
         name: inputValues[modalPlaceInputName],
@@ -161,6 +203,19 @@ function handleSubmitFormAddCard(evt, inputValues) {
     });
     addCardPopup.close();
 }
+
+const addCardPopup = new PopupWithForm({
+    popupSelector: addCardPopupSelector, 
+    popupOpenedClass, 
+    closeButtonSelector
+}, formSelector, handleSubmitFormAddCard);
+addCardPopup.setEventListeners();
+
+addCardBtn.addEventListener("click", () => {
+    formValidators['add-card-form'].disableSubmitButton();
+    saveNewCardBtn.textContent = 'Save';
+    addCardPopup.open();
+});
 
 // ------------- Delete Card Part ---------------
 function handleConfirmDelete(evt, cardToDelete) {
@@ -180,19 +235,6 @@ confirmDeletePopup.setEventListeners();
 function openConfirmDeletePopup(card) {
     confirmDeletePopup.open(card);
 }
-
-
-const addCardPopup = new PopupWithForm({
-    popupSelector: addCardPopupSelector, 
-    popupOpenedClass, 
-    closeButtonSelector
-}, formSelector, handleSubmitFormAddCard);
-addCardPopup.setEventListeners();
-
-addCardBtn.addEventListener("click", () => {
-    formValidators['add-card-form'].disableSubmitButton();
-    addCardPopup.open();
-});
 
 // ------------- Image Popup Part ---------------
 

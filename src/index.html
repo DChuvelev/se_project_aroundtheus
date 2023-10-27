@@ -14,7 +14,6 @@
         <header class="header">
             <img class="header__image" alt="Around US logo" src="<%=require('./images/around-the-world-optimized.svg')%>">
             <button class="header__reset-btn" type="button">RESET CARDS</button>
-            <button class="header__get-btn" type="button">GET CARDS</button>
         </header>
         <main class="content">
             <section class="profile">
@@ -55,6 +54,20 @@
             </div>
         </div>
 
+        <div class="modal" id="edit-profile-url-modal">
+            <div class="modal__content">
+                <form class="modal__form" name="edit-profile-url-form">
+                    <h2 class="modal__title">Change profile picture</h2>
+                    <fieldset class="modal__input-fieldset">
+                        <input type="url" name="profile-url-input" class="modal__input modal__input_profile-url" placeholder="Image link" required>
+                        <p class="modal__input-error profile-url-input-error"></p>
+                    </fieldset>
+                    <button type="submit" class="modal__submit-btn">Save</button>
+                </form>
+                <button type="button" class="modal__close-btn"></button>
+            </div>
+        </div>
+
         <div class="modal" id="add-card-modal">
             <div class="modal__content">
                 <form class="modal__form" name="add-card-form">
@@ -88,7 +101,6 @@
                 <button type="button" class="modal__close-btn"></button>
             </div>            
         </div>
-
     </div>
     <template id="card">
         <li class="card">

@@ -27,9 +27,12 @@ export const cardsArray = [
 ];
 
 export const editProfilePopupSelector = "#edit-profile-modal";
+export const saveProfileInfoBtn = document.querySelector(editProfilePopupSelector).querySelector(".modal__submit-btn");
+export const editProfileAvatarPopupSelector = "#edit-profile-url-modal";
+export const saveProfileAvatarBtn = document.querySelector(editProfileAvatarPopupSelector).querySelector(".modal__submit-btn");
 export const confirmDeletePopupSelector = "#confirm-delete-modal";
-export const confirmDeleteButtonSelector = document.querySelector(".modal__confirm-delete-btn");
 export const addCardPopupSelector = "#add-card-modal";
+export const saveNewCardBtn = document.querySelector(addCardPopupSelector).querySelector(".modal__submit-btn");
 export const imagePopupSelector = "#show-pic-modal";
 export const modalPictureSelector = ".modal__picture";
 export const modalPictureCaptionSelector = ".modal__picture-caption";
@@ -53,11 +56,13 @@ export const profileAvatarSelector = ".profile__image";
 
 export const modalTitleInputName = document.querySelector(".modal__input_profile-name").name;
 export const modalDescriptionInputName = document.querySelector(".modal__input_profile-description").name;
+export const modalProfileUrlInputName = document.querySelector(".modal__input_profile-url").name;
 export const modalPlaceInputName = document.querySelector(".modal__input_place-name").name;
 export const modalPlacePicUrlInputName = document.querySelector(".modal__input_place-pic-url").name;
 
 export const addCardForm = document.forms['add-card-form'];
 export const editProfileBtn = document.querySelector(".profile__edit-button");
+export const editProfileAvatarBtn = document.querySelector(".profile__image");
 export const addCardBtn = document.querySelector(".profile__add-card-button");
 
 export const cardTemplate = document.querySelector("#card").content;

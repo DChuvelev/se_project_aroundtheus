@@ -12,7 +12,12 @@
     height: 120px;
     border-radius: 50%;
     margin-right: 30px;
+}
 
+.profile__image:hover {
+    content: url("../images/edit-profile.svg");
+    object-fit: scale-down;
+    background-color: rgb(60, 60, 60);
 }
 
 .profile__info {

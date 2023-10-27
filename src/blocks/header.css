@@ -1,5 +1,4 @@
 .header {
-    /* display: inline; */
     max-width: 100%;
     min-height: 74px;
     margin: auto;
@@ -8,6 +7,10 @@
 
 .header__image {
     width: 173px;
+}
+
+.header__reset-btn {
+    display: none;
 }
 
 @media screen and (max-width: 648px) {
