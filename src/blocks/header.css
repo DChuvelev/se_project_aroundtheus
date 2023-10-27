@@ -9,6 +9,10 @@
     width: 173px;
 }
 
+.header__reset-btn {
+    display: none;
+}
+
 @media screen and (max-width: 648px) {
     .header {
         min-height: 56px;

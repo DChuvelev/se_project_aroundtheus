@@ -12,17 +12,18 @@
 <body class="page">
     <div class="page__content">
         <header class="header">
-            <img class= "header__image" alt="Around US logo" src="<%=require('./images/around-the-world-optimized.svg')%>">
+            <img class="header__image" alt="Around US logo" src="<%=require('./images/around-the-world-optimized.svg')%>">
+            <button class="header__reset-btn" type="button">RESET CARDS</button>
         </header>
         <main class="content">
             <section class="profile">
-                <img class="profile__image" alt="J. Cousteau in a red hat" src="<%=require('./images/jacques-cousteau.jpg')%>" >
+                <img class="profile__image" alt="" src="" >
                 <div class="profile__info">
                     <div class="profile__container-title-edit">
-                        <h1 class="profile__title">Jacques Cousteau</h1>
+                        <h1 class="profile__title"></h1>
                         <button aria-label="edit" class="profile__edit-button" type="button"></button>
                     </div>
-                    <p class="profile__description">Explorer</p>
+                    <p class="profile__description"></p>
                 </div>
                 <button aria-label="add" class="profile__add-card-button" type="button"></button>
             </section>
@@ -53,6 +54,20 @@
             </div>
         </div>
 
+        <div class="modal" id="edit-profile-url-modal">
+            <div class="modal__content">
+                <form class="modal__form" name="edit-profile-url-form">
+                    <h2 class="modal__title">Change profile picture</h2>
+                    <fieldset class="modal__input-fieldset">
+                        <input type="url" name="profile-url-input" class="modal__input modal__input_profile-url" placeholder="Image link" required>
+                        <p class="modal__input-error profile-url-input-error"></p>
+                    </fieldset>
+                    <button type="submit" class="modal__submit-btn">Save</button>
+                </form>
+                <button type="button" class="modal__close-btn"></button>
+            </div>
+        </div>
+
         <div class="modal" id="add-card-modal">
             <div class="modal__content">
                 <form class="modal__form" name="add-card-form">
@@ -74,6 +89,16 @@
                 <img class="modal__picture" src=# alt=#>
                 <p class="modal__picture-caption"></p>
                 <button type="button" class="modal__close-btn modal__close-btn_picture"></button>
+            </div>            
+        </div>
+
+        <div class="modal" id="confirm-delete-modal">
+            <div class="modal__content">
+                <form class="modal__form" name="confirm-delete-form">
+                    <p class="modal__confirm-delete-title">Are you sure?</p>
+                    <button type="submit" class="modal__submit-btn modal__confirm-delete-btn">Yes</button>
+                </form>
+                <button type="button" class="modal__close-btn"></button>
             </div>            
         </div>
     </div>
