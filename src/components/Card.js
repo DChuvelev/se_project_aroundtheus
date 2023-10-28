@@ -19,7 +19,7 @@ export default class Card {
     }
 
     _handleLikeCard = (evt) => {
-        this._callApiLike(this._cardImageElement.id, evt.target.classList.contains("card__button-heart_active")).then(res => {
+        this._callApiLike(this._cardImageElement.id, !evt.target.classList.contains("card__button-heart_active")).then(res => {
             evt.target.classList.toggle("card__button-heart_active");
             return res;
         }).catch(err => {

@@ -221,8 +221,9 @@ function handleConfirmDelete(evt, cardToDelete) {
     evt.preventDefault();
     cardToDelete.deleteCard().catch(err => {
         alert(err);
-    });
-    confirmDeletePopup.close();
+    }).finally(() => {
+        confirmDeletePopup.close();    
+    })    
 }
 
 const confirmDeletePopup = new PopupWithSubmitButton({

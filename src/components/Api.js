@@ -54,7 +54,7 @@ export default class Api {
         return this._request(`${this._baseUrl}/cards/${cardId}`, {
             headers: this._headers,
             method: "DELETE"
-        }, 'Error deleteng card from server.');
+        }, 'Error deleteng card from server. Try again later.');
     }
 
     writeCard(cardInfo) {
