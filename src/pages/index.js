@@ -36,10 +36,7 @@ import {
     modalPictureCaptionSelector,
     formValidators,
     basicRequestInfo,
-    resetCardsBtn,
-    saveProfileInfoBtn,
-    saveProfileAvatarBtn,
-    saveNewCardBtn
+    resetCardsBtn
 } from "../utils/constants.js"
 
 
@@ -68,21 +65,23 @@ const user = new UserInfo({
 
 // ------------- Edit Profile Info Part ---------------
 
-function handleSubmitFormProfile(evt, inputValues) {
-    saveProfileInfoBtn.textContent = 'Saving...';
+function handleSubmitFormProfile(evt, inputValues, popup) {
+    popup.renderLoading(true);
     evt.preventDefault();
 
     const newUserInfo = {
         name: `${inputValues[modalTitleInputName]}`,
         description: `${inputValues[modalDescriptionInputName]}`
     }
-    user.setUserInfo(newUserInfo);
     api.setUserInfo(newUserInfo).then((res) => {
         user.setUserInfo(newUserInfo);
+        editProfilePopup.close();
     }).catch(err => {
         alert(err);
-    }).finally (() => {
-        editProfilePopup.close();
+    }).finally(() => {
+        setTimeout(() => {
+            popup.renderLoading(false);
+        }, 1000);
     })
 }
 
@@ -102,23 +101,25 @@ editProfileBtn.addEventListener("click", () => {
     editProfilePopup.setInputValues(data);
     formValidators['edit-profile-form'].resetValidation();
     formValidators['edit-profile-form'].disableSubmitButton();
-    saveProfileInfoBtn.textContent = 'Save';
     editProfilePopup.open();
 });
 
 // ------------- Edit Profile Avatar Part ---------------
 
-function handleSubmitFormProfileAvatar(evt, inputValues) {
-    saveProfileAvatarBtn.textContent = 'Saving...';
+function handleSubmitFormProfileAvatar(evt, inputValues, popup) {
+    popup.renderLoading(true);
     evt.preventDefault();    
     api.setUserAvatar(inputValues[modalProfileUrlInputName]).then(res => {
         console.log(res);
         user.setUserAvatar(inputValues[modalProfileUrlInputName]);
+        editProfileAvatarPopup.close();
     }).catch (err => {
         alert(err);
     }).finally(() => {
-        editProfileAvatarPopup.close();
-    });
+        setTimeout(() => {
+            popup.renderLoading(false);
+        }, 1000);
+    })
 }
 
 const editProfileAvatarPopup = new PopupWithForm({
@@ -136,7 +137,6 @@ editProfileAvatarBtn.addEventListener("click", () => {
 
     formValidators['edit-profile-url-form'].resetValidation();
     formValidators['edit-profile-url-form'].disableSubmitButton();
-    saveProfileAvatarBtn.textContent = 'Save';
     editProfileAvatarPopup.open();
 });
 
@@ -150,36 +150,31 @@ function resetCards() {
 }
 
 function apiDeleteCard(id) {
-    api.deleteCard(id).then(res => {
-        console.log(res);
-    });
+    return api.deleteCard(id);
 }
 
 function apiLikeCard(id, isLiked) {
-    console.log(api.setCardLike(id, isLiked));
+    return api.setCardLike(id, isLiked);
 }
 
 resetCardsBtn.addEventListener("click", resetCards);
 
 const api = new Api(basicRequestInfo);
-const getInitialCardsPromise = api.getInitialCards();
-const getUserInfoPromise = api.getUserInfo();
-const promises = [getInitialCardsPromise, getUserInfoPromise];
+
 let cardsSection;
 
-Promise.all(promises).then(results => {
-    console.log(results);
+Promise.all([api.getInitialCards(), api.getUserInfo()]).then(([cards, userData]) => {
 
     //-------------------- Fill cards section with recieved cards ---------------------
-    cardsSection = new Section({ items: results[0], renderer: (cardInfo) => {
+    cardsSection = new Section({ items: cards, renderer: (cardInfo) => {
         const newCardElement = createCard(cardInfo);
         cardsSection.appendItem(newCardElement);    
     }}, cardsSectionSelector);
     cardsSection.renderItems();
 
     //-------------------- Fill user info with recieved data ---------------------
-    user.setUserInfo({name: results[1].name, description: results[1].about});
-    user.setUserAvatar(results[1].avatar);
+    user.setUserInfo({name: userData.name, description: userData.about});
+    user.setUserAvatar(userData.avatar);
 }).catch(err => {
     allert(err);
 })
@@ -188,8 +183,8 @@ Promise.all(promises).then(results => {
 
 // ------------- Add Card Part ---------------
 
-function handleSubmitFormAddCard(evt, inputValues) {
-    saveNewCardBtn.textContent = 'Saving...';
+function handleSubmitFormAddCard(evt, inputValues, popup) {
+    popup.renderLoading(true);
     evt.preventDefault();
     api.writeCard({
         name: inputValues[modalPlaceInputName],
@@ -198,10 +193,15 @@ function handleSubmitFormAddCard(evt, inputValues) {
         console.log(res);
         const addedCard = createCard(res);
         cardsSection.prependItem(addedCard);
+        addCardPopup.close();
     }).catch(err => {
         alert(err);
-    });
-    addCardPopup.close();
+    }).finally(() => {
+        setTimeout(() => {
+            popup.renderLoading(false);
+        }, 1000);
+        
+    })
 }
 
 const addCardPopup = new PopupWithForm({
@@ -213,15 +213,17 @@ addCardPopup.setEventListeners();
 
 addCardBtn.addEventListener("click", () => {
     formValidators['add-card-form'].disableSubmitButton();
-    saveNewCardBtn.textContent = 'Save';
     addCardPopup.open();
 });
 
 // ------------- Delete Card Part ---------------
 function handleConfirmDelete(evt, cardToDelete) {
     evt.preventDefault();
-    cardToDelete.deleteCard();
-    confirmDeletePopup.close();
+    cardToDelete.deleteCard().catch(err => {
+        alert(err);
+    }).finally(() => {
+        confirmDeletePopup.close();    
+    })    
 }
 
 const confirmDeletePopup = new PopupWithSubmitButton({
